@@ -48,14 +48,104 @@ Rectangle {
                 anchors.top: parent.top
             }
 
-            Rectangle {
+            // 右标题栏按钮
+            Row {
                 anchors.top: rightTitleBar.top
                 anchors.right: rightTitleBar.right
-                color: "transparent"
-                Image {
+                layoutDirection: Qt.RightToLeft
+                spacing: 0
+
+                // 关闭按钮
+                Rectangle {
+                    id: closeButton
                     width: topTitleBarHeight
                     height: topTitleBarHeight
-                    source: "/HardCut/images/close.png"
+                    color: closeHoverHandler.hovered ? "#ae1c1c" : "transparent"
+
+                    HoverHandler {
+                        id: closeHoverHandler
+                    }
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: topTitleBarHeight / 2
+                        height: topTitleBarHeight / 2
+                        source: "/HardCut/images/close.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            Qt.quit()
+                        }
+                    }
+                }
+
+                // 最小化按钮
+                Rectangle {
+                    id: minimizeButton
+                    width: topTitleBarHeight
+                    height: topTitleBarHeight
+                    color: minimizeHoverHandler.hovered ? "#1b1b1c" : "transparent"
+
+                    HoverHandler {
+                        id: minimizeHoverHandler
+                    }
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: topTitleBarHeight / 2
+                        height: topTitleBarHeight / 2
+                        source: "/HardCut/images/minimize.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            window.visibility = Window.Minimized
+                        }
+                    }
+                }
+
+                // 分隔
+                Rectangle {
+                    id: separateImage
+                    width: topTitleBarHeight
+                    height: topTitleBarHeight
+                    color: "transparent"
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: topTitleBarHeight / 2
+                        height: topTitleBarHeight / 2
+                        source: "/HardCut/images/separate.png"
+                    }
+                }
+
+                // 设置按钮
+                Rectangle {
+                    id: settingButton
+                    width: topTitleBarHeight
+                    height: topTitleBarHeight
+                    color: settingHoverHandler.hovered ? "#1b1b1c" : "transparent"
+
+                    HoverHandler {
+                        id: settingHoverHandler
+                    }
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: topTitleBarHeight / 2
+                        height: topTitleBarHeight / 2
+                        source: "/HardCut/images/setting.png"
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("clicked setting")
+                        }
+                    }
                 }
             }
         }

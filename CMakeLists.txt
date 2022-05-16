@@ -24,6 +24,12 @@ qt_add_qml_module(HardCut
         ./src/qml/main.qml 
         ./src/qml/FramelessTitleBar.qml 
         ./src/qml/Welcome.qml
+
+    RESOURCES
+        ./images/close.png
+        ./images/minimize.png
+        ./images/separate.png
+        ./images/setting.png
 )
 
 # Comment only when Debugging
