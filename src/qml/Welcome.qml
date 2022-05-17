@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
-import "qrc:/src/qml/utils/"
+import "./utils/" as Utils
 
 Rectangle {
     property int rectangleRadius: 15
@@ -39,7 +39,7 @@ Rectangle {
             color: "#1b1b1c"
 
             // 左标题栏
-            FramelessTitleBar {
+            Utils.FramelessTitleBar {
                 id: leftTitleBar
                 barHeight: topTitleBarHeight
                 anchors.left: parent.left
@@ -68,7 +68,7 @@ Rectangle {
             color: "#121212"
 
             // 右标题栏
-            FramelessTitleBar {
+            Utils.FramelessTitleBar {
                 id: rightTitleBar
                 barHeight: topTitleBarHeight
                 anchors.left: parent.left
@@ -198,7 +198,7 @@ Rectangle {
                     }
                 }
 
-                // 分隔
+                // 分隔图标
                 Rectangle {
                     id: separateImage
                     width: topTitleBarHeight
