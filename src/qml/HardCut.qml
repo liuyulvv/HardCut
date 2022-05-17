@@ -1,22 +1,24 @@
 import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import "./utils/" as Utils
+import "./components/" as Components
 
 Rectangle {
-    property int rectangleRadius: 15
-    property int leftBarWidth: 213
-    property int topTitleBarHeight: 30
-    property int buttonSize: 26
     signal closeHardCut
 
-    QtObject {
-        id: internal
-        property int lastVisibility: 0
-        property int lastWidth: 1536
-        property int lastHeight: 873
-    }
-
     anchors.fill: parent
-    color: "#1b1b1c"
+    color: "#121212"
+
+    Component.onCompleted: {
+        window.minimumWidth = 1136
+        window.minimumHeight = 492
+        window.width = Screen.desktopAvailableWidth
+        window.height = Screen.desktopAvailableHeight
+        window.x = 0
+        window.y = 0
+        window.showMaximized()
+    }
 
     // 修改鼠标样式
     MouseArea {
@@ -89,191 +91,85 @@ Rectangle {
     }
 
     // 标题栏
-    Rectangle {
-        id: topTitleBar
-        width: parent.width
-        height: topTitleBarHeight
+    Utils.HardCutTitleBar {
+        id: titleBar
+    }
+
+    property int splitMargin: 8
+
+    // 内容区域
+    SplitView {
+        id: splitView
+        anchors.top: titleBar.bottom
         anchors.left: parent.left
-        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        orientation: Qt.Vertical
 
-        Utils.FramelessTitleBar {
-            id: framelessTitleBar
-            backgroundColor: "#121212"
-            anchors.left: parent.left
-            anchors.top: parent.top
-            resizable: true
+        anchors.leftMargin: splitMargin
+        anchors.rightMargin: splitMargin
+        anchors.bottomMargin: splitMargin
+
+        handle: Rectangle {
+            implicitWidth: splitMargin
+            implicitHeight: splitMargin
+            color: "transparent"
         }
 
-        // 标题栏右侧按钮
-        Row {
-            anchors.top: topTitleBar.top
-            anchors.right: topTitleBar.right
-            anchors.topMargin: 2
-            anchors.rightMargin: 2
-            layoutDirection: Qt.RightToLeft
-            spacing: 0
+        // 操作区域
+        Rectangle {
+            SplitView.minimumHeight: 241
+            SplitView.maximumHeight: 788
+            SplitView.preferredHeight: 495
 
-            // 关闭按钮
-            Rectangle {
-                id: closeButton
-                width: buttonSize
-                height: buttonSize
-                color: closeHoverHandler.hovered ? "#ae1c1c" : "transparent"
+            color: "transparent"
+            SplitView {
+                anchors.fill: parent
 
-                HoverHandler {
-                    id: closeHoverHandler
+                handle: Rectangle {
+                    implicitWidth: splitMargin
+                    implicitHeight: splitMargin
+                    color: "#121212"
                 }
 
-                Image {
-                    anchors.centerIn: parent
-                    width: topTitleBarHeight / 2
-                    height: topTitleBarHeight / 2
-                    source: "qrc:/images/close.png"
+                Rectangle {
+                    color: "#1b1b1c"
+                    SplitView.minimumWidth: 450
+                    SplitView.maximumWidth: 1173
+                    SplitView.preferredWidth: 746
+
+                    SplitView.fillHeight: true
+
+                    Components.OperationArea {}
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        closeHardCut()
-                    }
-                }
-            }
+                // 播放器
+                Rectangle {
+                    color: "#1b1b1c"
+                    SplitView.minimumWidth: 339
+                    SplitView.maximumWidth: 1120
+                    SplitView.preferredWidth: 762
 
-            // 最大化按钮
-            Rectangle {
-                id: maximizeButton
-                width: buttonSize
-                height: buttonSize
-                color: maximizeHoverHandler.hovered ? "#202023" : "transparent"
-
-                HoverHandler {
-                    id: maximizeHoverHandler
+                    SplitView.fillHeight: true
+                    Components.Player {}
                 }
 
-                Image {
-                    anchors.centerIn: parent
-                    width: topTitleBarHeight / 2
-                    height: topTitleBarHeight / 2
-                    source: "qrc:/images/maximize.png"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (window.visibility === Window.Maximized
-                                || (window.width === Screen.desktopAvailableWidth
-                                    && window.height === Screen.desktopAvailableHeight)) {
-                            window.showNormal()
-                            window.width = internal.lastWidth
-                            window.height = internal.lastHeight
-                            window.x = Screen.width / 2 - window.width / 2
-                            window.y = Screen.height / 2 - window.height / 2
-                        } else {
-                            window.showMaximized()
-                            window.x = 0
-                            window.y = 0
-                            window.width = Screen.desktopAvailableWidth
-                            window.height = Screen.desktopAvailableHeight
-                        }
-                    }
-                }
-            }
-
-            // 最小化按钮
-            Rectangle {
-                id: minimizeButton
-                width: buttonSize
-                height: buttonSize
-                color: minimizeHoverHandler.hovered ? "#202023" : "transparent"
-
-                HoverHandler {
-                    id: minimizeHoverHandler
-                }
-
-                Image {
-                    anchors.centerIn: parent
-                    width: topTitleBarHeight / 2
-                    height: topTitleBarHeight / 2
-                    source: "qrc:/images/minimize.png"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        internal.lastVisibility = window.visibility
-                        window.showMinimized()
-                    }
-                }
-            }
-
-            // 分隔图标
-            Rectangle {
-                id: separateImage
-                width: buttonSize
-                height: buttonSize
-                color: "transparent"
-
-                Image {
-                    anchors.centerIn: parent
-                    width: topTitleBarHeight / 2
-                    height: topTitleBarHeight / 2
-                    source: "qrc:/images/separate.png"
+                // 草稿参数
+                Rectangle {
+                    color: "#1b1b1c"
+                    SplitView.minimumWidth: 318
+                    SplitView.fillHeight: true
+                    SplitView.fillWidth: true
                 }
             }
         }
-    }
 
-    // 记录普通窗口的长、宽等状态
-    Connections {
-        ignoreUnknownSignals: true
-        target: window
-        function onWidthChanged(newWidth) {
-            if (newWidth !== Screen.desktopAvailableWidth) {
-                internal.lastWidth = newWidth
-            }
+        // 轨道区域
+        Rectangle {
+            SplitView.minimumHeight: 202
+            SplitView.fillWidth: true
+            SplitView.fillHeight: true
+            color: "#1b1b1c"
         }
-        function onHeightChanged(newHeight) {
-            if (newHeight !== Screen.desktopAvailableHeight) {
-                internal.lastHeight = newHeight
-            }
-        }
-        function onWindowStateChanged(newState) {
-            if (newState === Qt.WindowNoState
-                    && window.visibility === Window.Minimized
-                    && internal.lastVisibility === Window.Maximized) {
-                window.showMaximized()
-            }
-        }
-    }
-
-    // 双击标题栏 切换最大化窗口和普通窗口
-    Connections {
-        ignoreUnknownSignals: true
-        target: framelessTitleBar
-        function onToggleMaximized() {
-            if (window.visibility === Window.Maximized
-                    || (window.width === Screen.desktopAvailableWidth
-                        && window.height === Screen.desktopAvailableHeight)) {
-                window.showNormal()
-                window.width = internal.lastWidth
-                window.height = internal.lastHeight
-                window.x = Screen.width / 2 - window.width / 2
-                window.y = Screen.height / 2 - window.height / 2
-            } else {
-                window.showMaximized()
-                window.x = 0
-                window.y = 0
-                window.width = Screen.desktopAvailableWidth
-                window.height = Screen.desktopAvailableHeight
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        window.width = Screen.desktopAvailableWidth
-        window.height = Screen.desktopAvailableHeight
-        window.x = 0
-        window.y = 0
-        window.showMaximized()
     }
 }

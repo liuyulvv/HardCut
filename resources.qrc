@@ -9,5 +9,10 @@
         <file>src/qml/HardCut.qml</file>
         <file>src/qml/main.qml</file>
         <file>src/qml/Welcome.qml</file>
+        <file>src/qml/components/Player.qml</file>
+        <file>src/qml/utils/HardCutTitleBar.qml</file>
+        <file>src/qml/components/OperationArea.qml</file>
+        <file>src/qml/utils/ActionButton.qml</file>
+        <file>images/media.png</file>
     </qresource>
 </RCC>

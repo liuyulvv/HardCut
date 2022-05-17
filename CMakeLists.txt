@@ -8,9 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS
     Quick
-    OpenGL
-    Multimedia
     Core5Compat
+    Multimedia
 )
 
 qt_add_executable(HardCut
@@ -33,4 +32,5 @@ target_compile_definitions(HardCut
 target_link_libraries(HardCut PRIVATE
     Qt6::Quick
     Qt6::Core5Compat
+    Qt6::Multimedia
 )
