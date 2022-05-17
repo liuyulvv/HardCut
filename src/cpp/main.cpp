@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/HardCut/src/qml/main.qml"_qs);
+    const QUrl url("qrc:/src/qml/main.qml");
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
         [url](QObject *obj, const QUrl &objUrl) {

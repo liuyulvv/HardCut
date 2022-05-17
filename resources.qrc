@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/close.png</file>
+        <file>images/maximize.png</file>
+        <file>images/minimize.png</file>
+        <file>images/separate.png</file>
+        <file>images/setting.png</file>
+        <file>src/qml/utils/FramelessTitleBar.qml</file>
+        <file>src/qml/HardCut.qml</file>
+        <file>src/qml/main.qml</file>
+        <file>src/qml/Welcome.qml</file>
+    </qresource>
+</RCC>

@@ -1,7 +1,7 @@
 import QtQuick
 
 Rectangle {
-    property color backgroundColor: "#121212"
+    property color backgroundColor: "transparent"
     property int barWidth: parent.width
     property int barHeight: parent.height
     width: barWidth

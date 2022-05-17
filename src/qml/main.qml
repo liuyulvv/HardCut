@@ -18,7 +18,25 @@ Window {
         Welcome {}
     }
 
+    Component {
+        id: hardCut
+        HardCut {}
+    }
+
     Component.onCompleted: {
         loader.sourceComponent = welcome
+    }
+
+    Connections {
+        ignoreUnknownSignals: true
+        target: loader.item
+
+        function onStartWork() {
+            loader.sourceComponent = hardCut
+        }
+
+        function onCloseHardCut() {
+            loader.sourceComponent = welcome
+        }
     }
 }
