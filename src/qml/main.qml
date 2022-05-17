@@ -5,8 +5,6 @@ Window {
     visible: true
     flags: Qt.Window | Qt.FramelessWindowHint
     color: "transparent"
-    width: 850
-    height: 564
 
     Loader {
         id: loader
