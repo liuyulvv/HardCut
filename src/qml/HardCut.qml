@@ -7,8 +7,61 @@ import "./components/" as Components
 Rectangle {
     signal closeHardCut
 
+    QtObject {
+        id: internal
+        property int lastVisibility: 0
+        property int lastWidth: 1536
+        property int lastHeight: 873
+    }
+
     anchors.fill: parent
     color: "#121212"
+
+    // 记录普通窗口的长、宽等状态
+    Connections {
+        ignoreUnknownSignals: true
+        target: window
+        function onWidthChanged(newWidth) {
+            if (newWidth !== Screen.desktopAvailableWidth) {
+                internal.lastWidth = newWidth
+            }
+        }
+        function onHeightChanged(newHeight) {
+            if (newHeight !== Screen.desktopAvailableHeight) {
+                internal.lastHeight = newHeight
+            }
+        }
+        function onWindowStateChanged(newState) {
+            if (newState === Qt.WindowNoState
+                    && window.visibility === Window.Minimized
+                    && internal.lastVisibility === Window.Maximized) {
+                window.showMaximized()
+            }
+        }
+    }
+
+    // 双击标题栏 切换最大化窗口和普通窗口
+    Connections {
+        ignoreUnknownSignals: true
+        target: framelessTitleBar
+        function onToggleMaximized() {
+            if (window.visibility === Window.Maximized
+                    || (window.width === Screen.desktopAvailableWidth
+                        && window.height === Screen.desktopAvailableHeight)) {
+                window.showNormal()
+                window.width = internal.lastWidth
+                window.height = internal.lastHeight
+                window.x = Screen.width / 2 - window.width / 2
+                window.y = Screen.height / 2 - window.height / 2
+            } else {
+                window.showMaximized()
+                window.x = 0
+                window.y = 0
+                window.width = Screen.desktopAvailableWidth
+                window.height = Screen.desktopAvailableHeight
+            }
+        }
+    }
 
     Component.onCompleted: {
         window.minimumWidth = 1136
