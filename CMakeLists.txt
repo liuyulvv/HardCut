@@ -13,8 +13,9 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS
 )
 
 qt_add_executable(HardCut
-    ./src/cpp/main.cpp
+    src/cpp/main.cpp
     resources.qrc
+    src/cpp/Player.h src/cpp/Player.cpp
 )
 
 # Comment only when Debugging

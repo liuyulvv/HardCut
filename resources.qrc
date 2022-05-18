@@ -9,10 +9,26 @@
         <file>src/qml/HardCut.qml</file>
         <file>src/qml/main.qml</file>
         <file>src/qml/Welcome.qml</file>
-        <file>src/qml/components/Player.qml</file>
         <file>src/qml/utils/HardCutTitleBar.qml</file>
         <file>src/qml/components/OperationArea.qml</file>
         <file>src/qml/utils/ActionButton.qml</file>
         <file>images/media.png</file>
+        <file>images/audio.png</file>
+        <file>images/activeMedia.png</file>
+        <file>images/activeAudio.png</file>
+        <file>images/text.png</file>
+        <file>images/activeText.png</file>
+        <file>images/sticker.png</file>
+        <file>images/activeSticker.png</file>
+        <file>images/effect.png</file>
+        <file>images/activeEffect.png</file>
+        <file>images/transition.png</file>
+        <file>images/activeTransition.png</file>
+        <file>images/filter.png</file>
+        <file>images/activeFilter.png</file>
+        <file>images/adjust.png</file>
+        <file>images/activeAdjust.png</file>
+        <file>src/qml/components/Media.qml</file>
+        <file>src/qml/components/OperationBar.qml</file>
     </qresource>
 </RCC>

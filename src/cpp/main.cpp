@@ -1,3 +1,4 @@
+#include "Player.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
@@ -5,6 +6,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<Player>("HardCut.Player", 1, 0, "Player");
+
     QQmlApplicationEngine engine;
     const QUrl url("qrc:/src/qml/main.qml");
     QObject::connect(
